@@ -1,1 +1,150 @@
-# our1monthanniversary
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1 Month Anniversary Booklet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url('https://4kwallpapers.com/images/walls/thumbs_2t/10495.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      perspective: 1000px;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 230, 240, 0.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .booklet {
+      width: 350px;
+      height: 460px;
+      background: #fff0f6cc;
+      border-radius: 25px;
+      box-shadow: 0 0 25px #ff99ccaa;
+      position: relative;
+      padding: 40px 30px;
+      box-sizing: border-box;
+      text-align: center;
+      color: #d6336c;
+      user-select: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.7s ease;
+      z-index: 10;
+    }
+    .booklet:hover {
+      background: #ffe0f0cc;
+    }
+    .page {
+      position: absolute;
+      top: 40px;
+      left: 30px;
+      width: 290px;
+      height: 380px;
+      font-size: 1.25em;
+      line-height: 1.5;
+      font-family: 'Comic Neue', cursive;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+      background: #fff0f6cc;
+      box-shadow: 0 8px 20px #ff80bf55;
+      transition: opacity 0.3s ease;
+    }
+    .page h2 {
+      margin-top: 0;
+      font-size: 2.1em;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+    .page p {
+      margin-top: 10px;
+    }
+    .page.back {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body>
+
+<div class="booklet" id="booklet" title="Click to turn page">
+  <div class="page front" id="pageFront"></div>
+  <div class="page back" id="pageBack"></div>
+</div>
+
+<script>
+  const booklet = document.getElementById('booklet');
+  const pageFront = document.getElementById('pageFront');
+  const pageBack = document.getElementById('pageBack');
+
+  const messages = [
+    {
+      title: "Our 1 Month Anniversary",
+      text: "One month ago, our journey together began, and since then, my life has been brighter than ever."
+    },
+    {
+      title: "Moments to Remember",
+      text: "Every laugh, every chat and convos, every shared dream has made this past month unforgettable."
+    },
+    {
+      title: "Looking Ahead",
+      text: "I can't wait to make even more memories with you, growing closer every day."
+    },
+    {
+      title: "Forever Yours",
+      text: "Thank you for being you — my heart is yours now and always. ❤️"
+    }
+  ];
+
+  let currentIndex = 0;
+  let isFlipping = false;
+
+  function setPageContent(el, index) {
+    el.innerHTML = `
+      <h2>${messages[index].title}</h2>
+      <p>${messages[index].text}</p>
+    `;
+  }
+
+  setPageContent(pageFront, currentIndex);
+
+  booklet.addEventListener('click', () => {
+    if (isFlipping) return;
+
+    if (currentIndex === messages.length - 1) {
+      booklet.style.cursor = 'default';
+      booklet.title = "That's all, hope you loved it!";
+      return;
+    }
+
+    isFlipping = true;
+
+    setPageContent(pageBack, currentIndex + 1);
+    booklet.style.transform = 'rotateY(180deg)';
+
+    setTimeout(() => {
+      currentIndex++;
+      setPageContent(pageFront, currentIndex);
+      booklet.style.transform = 'rotateY(0deg)';
+      isFlipping = false;
+    }, 700);
+  });
+</script>
+
+</body>
+</html>
